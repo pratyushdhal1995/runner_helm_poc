@@ -1,0 +1,17 @@
+name: Test Minikube Runner
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test-arc-runner:
+    runs-on: pd-minikube-arc-runner
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Run a test command
+        run: |
+          echo "Hello from ARC self-hosted runner on Minikube!"
+          hostname
+          uname -a
