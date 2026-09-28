@@ -1,0 +1,33 @@
+name: Test Minikube DinD Runner
+
+on:
+  workflow_dispatch:
+
+jobs:
+  dind-test:
+    runs-on: pd-minikube-arc-dind
+    steps:
+      - name: Runner info
+        run: |
+          echo "Hello from ARC dind runner on Minikube!"
+          hostname
+          uname -a
+          cat /etc/os-release
+
+      - name: Check Docker daemon
+        run: |
+          docker version
+          docker info
+
+      - name: Run a container
+        run: docker run --rm node:18-bullseye node --version
+
+      - name: Build and run an image
+        run: |
+          mkdir demo && cd demo
+          cat > Dockerfile <<'EOF'
+          FROM node:18-bullseye
+          CMD ["node", "-e", "console.log('Hello from image built inside dind')"]
+          EOF
+          docker build -t dind-test-image .
+          docker run --rm dind-test-image
