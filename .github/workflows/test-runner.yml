@@ -7,14 +7,11 @@ jobs:
   test-arc-runner:
     runs-on: pd-minikube-arc-runner
     container:
-      image: node:18-bullseye   # You can replace this with ubuntu:latest, alpine:latest, python:3.11, etc.
+      image: node:18-bullseye
     steps:
-      - name: Run a test command inside container
+      - name: Run test command inside container
         run: |
           echo "Hello from ARC container job on Minikube!"
-          echo "Hostname inside container:"
           hostname
-          echo "OS / Kernel Info:"
           uname -a
-          echo "Linux Distribution Info:"
           cat /etc/os-release
